@@ -1,0 +1,1 @@
+    inet 10.65.0.72/24 brd 10.65.0.255 scope global dynamic enp0s3

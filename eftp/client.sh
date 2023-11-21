@@ -1,7 +1,9 @@
 #!/bin/bash
 #el cliente
+IP=`10.65.0.72/24`
 SERVER="localhost"
 echo "EFTP 1.0"
+echo $IP
 
 echo "(1) Send"
 #problemas de sincronizacion para que no tenga problemas de escucha
