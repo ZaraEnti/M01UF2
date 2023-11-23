@@ -65,3 +65,12 @@ fi
 cat imgs/fary1.txt | nc $SERVE $PORT
 
 echo "(15) LIsten"
+DATA=`nc -l -p $SERVER -w 0`
+if [ "$DATA" != "OK_DATA" ]
+then
+echo "Error 4"
+sleep 1
+echo "KO_DATA"
+fi
+echo "FIN"
+exit 0

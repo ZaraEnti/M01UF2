@@ -73,9 +73,12 @@ echo $DATA
 echo "(16) STORE & SEND"
 if [ "$DATA" != "" ]
 then
-	echo "Error 4: BAD FILE NAME PREFIX"
+	echo "Error 4: EMTY DATA"
 	sleep 1
 	echo "KO_DATA" | nc $CLIENT $PORT
 	exit 4
 fi
 echo $DATA > inbox/$FILE_NAME
+echo "OK_DATA" | nc $CLIENT $PORT
+
+exit 0
