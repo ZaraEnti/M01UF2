@@ -6,7 +6,7 @@ IP=`10.65.0.72/24`
 PORT="3333"
 SERVER="localhost"
 
-echo "EFTP 1.0 IP"
+echo "EFTP 1.0"
 echo $IP
 
 echo "(1) Send"
@@ -22,7 +22,7 @@ DATA=`nc -l -p PORT -w 0`
 
 echo $DATA
 
-echo "(5) Test & Send"
+echo "(5) Test & Send"#envio siempr con el listen
 
 if [ "$DATA" != "OK_HEADER" ]
 then

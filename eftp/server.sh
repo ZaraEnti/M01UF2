@@ -44,11 +44,10 @@ then
 fi
 
 echo "BOOOM"
-sleep 2
+sleep 1 #asegura que el otro lado nos este escuchando
 echo "BOOOM" | nc $CLIENT PORT
 
 echo "(8) Listen"
-DATA=`nc -l -p PORT -w 0`
+DATA=`nc -l -p PORT -w 0` #netcat 
 
 echo $DATA
-
