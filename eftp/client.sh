@@ -62,4 +62,6 @@ sleep 1
 echo "Error KO_FILE_NALE" | nc $SERVER $PORT
 exit 3
 fi
-cat /home/enti/M01UF2/eftp/fary1.txt | nc $SERVE $PORT
+cat imgs/fary1.txt | nc $SERVE $PORT
+
+echo "(15) LIsten"

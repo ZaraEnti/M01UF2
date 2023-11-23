@@ -39,6 +39,7 @@ echo "(7) Test & Send HANDSHAKE"
 if [ "$DATA" != "BOOOM" ]
 then
 	echo "Error 2 HANDSHAKE"
+	sleep 1
 	echo "KO_HANDSHAKE" | nc $CLIENT $PORT
 	exit 2
 fi
@@ -68,3 +69,13 @@ echo "OK_FILE_NAME" | nc $CLIENT $PORT
 echo "(13) Listen"
 DATA=`nc -l -p $PORT -w 0`
 echo $DATA
+
+echo "(16) STORE & SEND"
+if [ "$DATA" != "" ]
+then
+	echo "Error 4: BAD FILE NAME PREFIX"
+	sleep 1
+	echo "KO_DATA" | nc $CLIENT $PORT
+	exit 4
+fi
+echo $DATA > inbox/$FILE_NAME
