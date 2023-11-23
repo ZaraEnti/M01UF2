@@ -58,6 +58,7 @@ PREFIX=`echo $DATA | cut -d " " -f 1` #la -d es el delimitador donde lo corto y 
 if [ $PREFIX != "FILE_NAME" ]
 then
 echo "ERROR 3"
+sleep 1
 echo "KO_FILE_NAME" | nc $CLIENT $PORT
 exit 3
 fi
