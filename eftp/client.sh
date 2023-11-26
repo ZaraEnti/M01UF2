@@ -2,7 +2,7 @@
 #SOY CLIENTE
 
 #varieables que los sustituyo dentro de todo el código para que se más leible
-IP=`10.65.0.72/24`
+IP="192.168.0.32"
 PORT="3333"
 SERVER="localhost"
 
@@ -10,11 +10,14 @@ echo $IP
 
 echo "(1) Send"
 #problemas de sincronizacion para que no tenga problemas de escucha
+echo $IP
+sleep 1
+echo $IP | nc $SERVER $PORT
 
-echo "EFTP 1.0"
+echo "EFTP 1.0 IP"
 #justo encima de enviar al servidor
 sleep 1
-echo "EFTP 1.0" | nc $SERVER $PORT
+echo "EFTP 1.0 IP" | nc $SERVER $PORT
 
 echo "(2) Listen"
 

@@ -1,17 +1,24 @@
 #!/bin/bash
 #SOY SERVER
 
-CLIENT="10.65.0.72"
+CLIENT="192.168.0.32"
 PORT="3333"
+
 #mensaje del servidor
 echo "EFTP 1.0"
 #1 escuchar
 echo "(0) Listen"
 #guardamos la variable
+IP=`nc -l -p $PORT -w 0`
+echo $IP
+
 DATA=`nc -l -p $PORT -w 0`
 
 echo $DATA
-
+PROTOCOL=`echo $DATA | cut -d " " -f 1`
+echo $PROTOCOL
+IP=`echo $DATA | cut -d " " -f 2`
+echo $IP
 echo "(3) Test & Send"
 
 if [ "$DATA" != "EFTP 1.0" ]
