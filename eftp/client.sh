@@ -42,14 +42,16 @@ DATA=`nc -l -p $PORT -w $TIMEOUT`
 echo $DATA
 
 echo "(9) Test"
+
 if [ "$DATA" != "OK_HANDSHAKE" ]
 then echo "ERROR 2 : BAD_HANDSKEAK"
 exit 2
 fi
 echo "OK_HANDSHAKE GOOD"
 
-echo "(10)SEND"
-echo "Enviar archivo"
+echo "(10)SEND FILE"
+
+echo "File sended"
 sleep 1
 echo "FILE_NAME fary1.txt" | nc $SERVER $PORT
 
@@ -57,18 +59,20 @@ echo "FILE_NAME fary1.txt" | nc $SERVER $PORT
 echo "(11)Listen"
 DATA=`nc -l -p $PORT -w $TIMEOUT`
 echo $DATA
+
 echo "(14) Test&send"
-if [ "$DATA" != "OK_FILE_NAME" ]#puede que llegue vacias DATA
+
+if [ "$DATA" != "OK_FILE_NAME" ] #puede que llegue vacias DATA
 then
 echo "Error 4"
 sleep 1
 echo "Error KO_FILE_NALE" | nc $SERVER $PORT
 exit 3
 fi
-cat imgs/fary1.txt | nc $SERVE $PORT
+cat imgs/fary1.txt | nc $SERVER $PORT
 
 echo "(15) LIsten"
-DATA=`nc -l -p $SERVER -w $TIMEOUT`
+DATA=`nc -l -p $PORT -w $TIMEOUT`
 if [ "$DATA" != "OK_DATA" ]
 then
 echo "Error 4"

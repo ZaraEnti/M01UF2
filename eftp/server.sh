@@ -51,21 +51,21 @@ then
 	exit 2
 fi
 sleep 1
+
 echo "OK_HANDSHAKE" | nc $CLIENT $PORT
 
-echo "BOOOM"
-sleep 1 #asegura que el otro lado nos este escuchando
-echo "BOOOM" | nc $CLIENT $PORT
 
 echo "(8) Listen"
+
 DATA=`nc -l -p $PORT -w $TIMEOUT` #netcat 
+
 echo $DATA
 
 echo "(12) Test&store&send"
-PREFIX=`echo $DATA | cut -d " " -f 2` #la -d es el delimitador donde lo corto y la f es el campo 
-if [ $PREFIX != "FILE_NAME" ]
+PREFIX=`echo $DATA | cut -d " " -f 1` #la -d es el delimitador donde lo corto y la f es el campo 
+if [ "$PREFIX" != "FILE_NAME" ]
 then
-echo "ERROR 3"
+echo "ERROR 3: BAD FILE NAME PREFIX"
 sleep 1
 echo "KO_FILE_NAME" | nc $CLIENT $PORT
 exit 3
@@ -78,7 +78,7 @@ DATA=`nc -l -p $PORT -w $TIMEOUT`
 echo $DATA
 
 echo "(16) STORE & SEND"
-if [ "$DATA" != "" ]
+if [ "$DATA" == "" ]
 then
 	echo "Error 4: EMTY DATA"
 	sleep 1
