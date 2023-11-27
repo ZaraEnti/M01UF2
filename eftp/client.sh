@@ -2,7 +2,7 @@
 #SOY CLIENTE
 
 #varieables que los sustituyo dentro de todo el código para que se más leible
-IP="192.168.0.32"
+IP="10.65.0.72"
 PORT="3333"
 SERVER="localhost"
 

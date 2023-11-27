@@ -1,7 +1,7 @@
 #!/bin/bash
 #SOY SERVER
 
-CLIENT="192.168.0.32"
+CLIENT="10.65.0.72"
 PORT="3333"
 
 #mensaje del servidor
