@@ -5,23 +5,23 @@
 IP="10.65.0.72"
 PORT="3333"
 SERVER="localhost"
-
-echo $IP
+TIMEOUT=1
+#echo $IP
 
 echo "(1) Send"
 #problemas de sincronizacion para que no tenga problemas de escucha
-echo $IP
-sleep 1
-echo $IP | nc $SERVER $PORT
+#echo $IP
+#sleep 1
+#echo $IP | nc $SERVER $PORT
 
-echo "EFTP 1.0 IP"
+echo "EFTP 1.0"
 #justo encima de enviar al servidor
 sleep 1
-echo "EFTP 1.0 IP" | nc $SERVER $PORT
+echo "EFTP 1.0" | nc $SERVER $PORT
 
 echo "(2) Listen"
 
-DATA=`nc -l -p $PORT -w 0`
+DATA=`nc -l -p $PORT -w $TIMEOUT`
 
 echo $DATA
 
@@ -38,11 +38,11 @@ sleep 1
 echo "BOOOM" | nc $SERVER $PORT
 
 echo "(6) Listen"
-DATA=`nc -l -p $PORT -w 0`
+DATA=`nc -l -p $PORT -w $TIMEOUT`
 echo $DATA
 
 echo "(9) Test"
-if [ $DATA != "OK_HANDSHAKE" ]
+if [ "$DATA" != "OK_HANDSHAKE" ]
 then echo "ERROR 2 : BAD_HANDSKEAK"
 exit 2
 fi
@@ -55,10 +55,10 @@ echo "FILE_NAME fary1.txt" | nc $SERVER $PORT
 
 
 echo "(11)Listen"
-DATA=`nc -l -p $PORT -w 0`
+DATA=`nc -l -p $PORT -w $TIMEOUT`
 echo $DATA
 echo "(14) Test&send"
-if [ $DATA != "OK_FILE_NAME" ]
+if [ "$DATA" != "OK_FILE_NAME" ]#puede que llegue vacias DATA
 then
 echo "Error 4"
 sleep 1
@@ -68,7 +68,7 @@ fi
 cat imgs/fary1.txt | nc $SERVE $PORT
 
 echo "(15) LIsten"
-DATA=`nc -l -p $SERVER -w 0`
+DATA=`nc -l -p $SERVER -w $TIMEOUT`
 if [ "$DATA" != "OK_DATA" ]
 then
 echo "Error 4"

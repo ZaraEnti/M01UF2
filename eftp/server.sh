@@ -3,22 +3,22 @@
 
 CLIENT="10.65.0.72"
 PORT="3333"
-
+TIMEOUT=1
 #mensaje del servidor
 echo "EFTP 1.0"
 #1 escuchar
 echo "(0) Listen"
 #guardamos la variable
-IP=`nc -l -p $PORT -w 0`
-echo $IP
+#IP=`nc -l -p $PORT -w $TIMEOUT`
+#echo $IP
 
-DATA=`nc -l -p $PORT -w 0`
+DATA=`nc -l -p $PORT -w $TIMEOUT`
 
-echo $DATA
-PROTOCOL=`echo $DATA | cut -d " " -f 1`
-echo $PROTOCOL
-IP=`echo $DATA | cut -d " " -f 2`
-echo $IP
+#echo $DATA
+#PROTOCOL=`echo $DATA | cut -d " " -f 1`
+#echo $PROTOCOL
+#IP=`echo $DATA | cut -d " " -f 2`
+#echo $IP
 echo "(3) Test & Send"
 
 if [ "$DATA" != "EFTP 1.0" ]
@@ -37,7 +37,7 @@ sleep 1
 echo "OK_HEADER" | nc $CLIENT $PORT
 
 echo "(4) Listen"
-DATA=`nc -l -p $PORT -w 0`
+DATA=`nc -l -p $PORT -w $TIMEOUT`
 #eschuchamos sin necedsidad else
 #es doble comprovacion
 
@@ -58,7 +58,7 @@ sleep 1 #asegura que el otro lado nos este escuchando
 echo "BOOOM" | nc $CLIENT $PORT
 
 echo "(8) Listen"
-DATA=`nc -l -p $PORT -w 0` #netcat 
+DATA=`nc -l -p $PORT -w $TIMEOUT` #netcat 
 echo $DATA
 
 echo "(12) Test&store&send"
@@ -74,7 +74,7 @@ sleep 1
 echo "OK_FILE_NAME" | nc $CLIENT $PORT
 
 echo "(13) Listen"
-DATA=`nc -l -p $PORT -w 0`
+DATA=`nc -l -p $PORT -w $TIMEOUT`
 echo $DATA
 
 echo "(16) STORE & SEND"
