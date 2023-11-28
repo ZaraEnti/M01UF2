@@ -91,4 +91,5 @@ echo "$DATA" > inbox/$FILE_NAME
 echo "$FILE_MD5" > inbox/$FILE_NAME
 echo "OK_DATA" | nc $CLIENT $PORT
 
+echo "FIN"
 exit 0
