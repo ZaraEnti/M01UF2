@@ -27,8 +27,10 @@ if [ "$DATA" != "EFTP 1.0" ]
 then
 	echo "Error 1 BADHEADER"
 	sleep 1
-	echo "KO_HEADER" | nc $CLIENT 3333 #comprobación de la cosas que van mal
-	exit 1 #para salir del programa para nuestro progama
+	echo "KO_HEADER" | nc $CLIENT 3333 
+	#comprobación de la cosas que van mal
+	exit 1 
+	#para salir del programa para nuestro progama
 
 fi
 
@@ -55,41 +57,79 @@ sleep 1
 echo "OK_HANDSHAKE" | nc $CLIENT $PORT
 
 
-echo "(8) Listen"
+echo "(8) LISTEN"
 
 DATA=`nc -l -p $PORT -w $TIMEOUT` #netcat 
-
 echo $DATA
 
 echo "(12) Test&store&send"
-PREFIX=`echo "$DATA" | cut -d " " -f 1` #la -d es el delimitador donde lo corto y la f es el campo 
+
+PREFIX=`echo "$DATA" | cut -d " " -f 1` 
+#la -d es el delimitador donde lo corto y la f es el campo 
+
 FILE_NAME=`echo "$DATA" | cut -d " " -f 2`
 FILE_MD5=`echo "$DATA" |cut -d " " -f 3`
+FILE_MD5_LOCAL=`echo $FILE_NAME | md5sum | cut -d " " -f 1`
+
+#CRC comprobación de errores de redundancia
 if [ "$PREFIX" != "FILE_NAME" ]
 then
-echo "ERROR 3: BAD FILE NAME PREFIX"
-sleep 1
-echo "KO_FILE_NAME" | nc $CLIENT $PORT
-exit 3
+	echo "ERROR 3: BAD FILE NAME PREFIX"
+	sleep 1
+	echo "KO_FILE_NAME" | nc $CLIENT $PORT
+	exit 3
 fi
-sleep 1
+
+if [ "$FILE_MD5" != "$FILE_MD5_LOCAL" ]
+then
+	echo "ERROR 3 : BAD FILE NAME MD5"
+	sleep 1
+	echo "KO_FILE_NAME" | nc $CLIENT $PORT
+	exit 3
+fi
+
 echo "OK_FILE_NAME" | nc $CLIENT $PORT
 
 echo "(13) Listen"
-DATA=`nc -l -p $PORT -w $TIMEOUT`
-echo $DATA
+#directamento lo guardamos como nos llega
+nc -l -p $PORT -w $TIMEOUT > inbox/$FILE_NAME
+echo inbox/$FILENAME
+
+
 
 echo "(16) STORE & SEND"
-if [ "$DATA" == "" ]
+#si nos llega vacio si nos sale el error
+
+DATA=`cat inbox/$FILE_NAME`
+
+if [ $DATA == "" ]
 then
 	echo "Error 4: EMTY DATA"
 	sleep 1
 	echo "KO_DATA" | nc $CLIENT $PORT
 	exit 4
 fi
-echo "$DATA" > inbox/$FILE_NAME
-echo "$FILE_MD5" > inbox/$FILE_NAME
+
+echo $DATA > inbox/$FILE_NAME
 echo "OK_DATA" | nc $CLIENT $PORT
 
+echo "(17) LISTEN"
+
+DATA=`nc -l -p $PORT -w $TIMEOUT`
+echo $DATA
+#lo guardaremos dentro de un archivo que hemos creado en inbox/
+
+FILE_MD5_LOCAL=`cat imgs/$FILE_NAME | md5sum | cut -d " " -f 1`
+
+echo "(20) TEST $ SEND"
+FILE_MD5=`echo $DATA | cut -d " " -f 2`
+
+if [ "FILE_MD5" != "$FILE_MD5_LOCAL" ]
+then 
+	echo "ERROR BAD FILE_MD5"
+	exit 4
+fi
+
+#terminamos el código
 echo "FIN"
 exit 0
