@@ -62,7 +62,9 @@ DATA=`nc -l -p $PORT -w $TIMEOUT` #netcat
 echo $DATA
 
 echo "(12) Test&store&send"
-PREFIX=`echo $DATA | cut -d " " -f 1` #la -d es el delimitador donde lo corto y la f es el campo 
+PREFIX=`echo "$DATA" | cut -d " " -f 1` #la -d es el delimitador donde lo corto y la f es el campo 
+FILE_NAME=`echo "$DATA" | cut -d " " -f 2`
+FILE_MD5=`echo "$DATA" |cut -d " " -f 3`
 if [ "$PREFIX" != "FILE_NAME" ]
 then
 echo "ERROR 3: BAD FILE NAME PREFIX"
@@ -85,7 +87,8 @@ then
 	echo "KO_DATA" | nc $CLIENT $PORT
 	exit 4
 fi
-echo $DATA > inbox/$FILE_NAME
+echo "$DATA" >> inbox/$FILE_NAME
+echo "$FILE_MD5" >> inbox/$FILE_NAME
 echo "OK_DATA" | nc $CLIENT $PORT
 
 exit 0

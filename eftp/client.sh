@@ -49,11 +49,14 @@ exit 2
 fi
 echo "OK_HANDSHAKE GOOD"
 
+FILE_NAME="fary1.txt"
+FILE_MD5=`echo fary1.txt | md5sum | cut -d " " -f 1`
+
 echo "(10)SEND FILE"
 
-echo "File sended"
+echo "FILE AND MD5 SENDED"
 sleep 1
-echo "FILE_NAME fary1.txt" | nc $SERVER $PORT
+echo "FILE_NAME $FILE_NAME  $FILE_MD5" | nc $SERVER $PORT
 
 
 echo "(11)Listen"
@@ -71,7 +74,7 @@ exit 3
 fi
 cat imgs/fary1.txt | nc $SERVER $PORT
 
-echo "(15) LIsten"
+echo "(15) LISTEN"
 DATA=`nc -l -p $PORT -w $TIMEOUT`
 if [ "$DATA" != "OK_DATA" ]
 then
