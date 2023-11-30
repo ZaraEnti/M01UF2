@@ -93,7 +93,7 @@ echo "OK_FILE_NAME" | nc $CLIENT $PORT
 echo "(13) Listen"
 #directamento lo guardamos como nos llega
 nc -l -p $PORT -w $TIMEOUT > inbox/$FILE_NAME
-echo inbox/$FILENAME
+echo $FILE_NAME
 
 
 
@@ -102,7 +102,7 @@ echo "(16) STORE & SEND"
 
 DATA=`cat inbox/$FILE_NAME`
 
-if [ $DATA == "" ]
+if [ "$DATA" == "" ]
 then
 	echo "Error 4: EMTY DATA"
 	sleep 1
@@ -110,7 +110,6 @@ then
 	exit 4
 fi
 
-echo $DATA > inbox/$FILE_NAME
 echo "OK_DATA" | nc $CLIENT $PORT
 
 echo "(17) LISTEN"
@@ -119,17 +118,17 @@ DATA=`nc -l -p $PORT -w $TIMEOUT`
 echo $DATA
 #lo guardaremos dentro de un archivo que hemos creado en inbox/
 
-FILE_MD5_LOCAL=`cat imgs/$FILE_NAME | md5sum | cut -d " " -f 1`
 
 echo "(20) TEST $ SEND"
-FILE_MD5=`echo $DATA | cut -d " " -f 2`
+PREFIX=`echo $DATA | cut -d " " -f 1`
 
-if [ "FILE_MD5" != "$FILE_MD5_LOCAL" ]
+if [ "$PREFIX" != "FILE_MD5" ]
 then 
 	echo "ERROR BAD FILE_MD5"
 	exit 4
 fi
-
+FILE_MD5=`echo $DATA | cut -d " " -f 2`
+FILE_MD5_LOCAL=`cat inbox/$FILE_NAME | md5sum | cut -d " " -f 1`
 #terminamos el código
 echo "FIN"
 exit 0

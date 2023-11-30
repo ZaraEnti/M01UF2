@@ -70,6 +70,7 @@ echo $DATA
 
 echo "(14) Test&send"
 
+
 if [ "$DATA" != "OK_FILE_NAME" ] #puede que llegue vacias DATA
 
 then
@@ -78,7 +79,7 @@ then
 	echo "Error KO_FILE_NALE" | nc $SERVER $PORT
 	exit 3
 fi
-
+sleep 1
 cat imgs/fary1.txt | nc $SERVER $PORT
 
 echo "(15) LISTEN"
@@ -86,15 +87,15 @@ echo "(15) LISTEN"
 DATA=`nc -l -p $PORT -w $TIMEOUT`
 echo $DATA
 
+#es el md5 del archivo que 
+echo "(18) SEND"
+
 if [ "$DATA" != "OK_DATA" ]
 then
 	echo "Error 4"
 	sleep 1
 	echo "KO_DATA"
 fi
-
-#es el md5 del archivo que 
-echo "(18) SEND"
 
 #enviar el contenido del archivo y su md5
 FILE_MD5=`cat imgs/$FILE_NAME| md5sum| cut -d " " -f 1`
