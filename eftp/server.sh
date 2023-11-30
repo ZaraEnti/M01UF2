@@ -129,6 +129,14 @@ then
 fi
 FILE_MD5=`echo $DATA | cut -d " " -f 2`
 FILE_MD5_LOCAL=`cat inbox/$FILE_NAME | md5sum | cut -d " " -f 1`
+if [ "$FILE_MD5" != "$FILE_MD5_LOCAL" ]
+then
+	echo "Error FILE_MD5"
+	sleep 1
+	echo "KO_ FILE_MD5" | nc $CLIENT $PORT
+fi
+sleep 1
+echo "OK_FILE_MD5" | nc $CLIENT $PORT
 #terminamos el código
 echo "FIN"
 exit 0

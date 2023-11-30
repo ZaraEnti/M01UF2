@@ -106,8 +106,14 @@ sleep 1
 
 echo "(19) LISTEN"
 
-echo "FIN"
 DATA=`nc -l -p $PORT -w $TIMEOUT`
 echo $DATA
+echo "(20) TEST"
+if [ "$DATA" != "OK_FILE_MD5" ]
+	then
+	echo "ERROR: FILE_ MD5"
+	exit 5
+fi
 
+echo "FIN"
 exit 0
