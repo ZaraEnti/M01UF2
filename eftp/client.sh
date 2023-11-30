@@ -2,9 +2,18 @@
 #SOY CLIENTE
 
 #varieables que los sustituyo dentro de todo el código para que se más leible
+PARAMETRO=`echo $#`
+if [ "$PARAMETRO" == 0 ]
+then
+	SERVER="localhost"
+fi
+
+echo $0
+echo $1
+# para saber si me hja dado un parametro
+SERVER="10.65.0.72"
 IP="10.65.0.72"
 PORT="3333"
-SERVER="10.77.0.72"
 TIMEOUT=1
 #echo $IP
 
