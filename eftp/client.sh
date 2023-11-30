@@ -3,9 +3,12 @@
 
 #varieables que los sustituyo dentro de todo el código para que se más leible
 PARAMETRO=`echo $#`
-if [ "$PARAMETRO" == 0 ]
+if [ "$#" -eq 0 ]
 then
 	SERVER="localhost"
+elif [ "$#" -eq 1 ]
+then
+	SERVER=$1
 fi
 
 echo $0
