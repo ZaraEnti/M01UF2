@@ -4,7 +4,7 @@
 #varieables que los sustituyo dentro de todo el código para que se más leible
 IP="10.65.0.72"
 PORT="3333"
-SERVER="localhost"
+SERVER="10.77.0.72"
 TIMEOUT=1
 #echo $IP
 
@@ -17,7 +17,7 @@ echo "(1) Send"
 echo "EFTP 1.0"
 #justo encima de enviar al servidor
 sleep 1
-echo "EFTP 1.0" | nc $SERVER $PORT
+echo "EFTP 1.0 $IP" | nc $SERVER $PORT
 
 echo "(2) LISTEN"
 
@@ -108,7 +108,7 @@ echo "(19) LISTEN"
 
 DATA=`nc -l -p $PORT -w $TIMEOUT`
 echo $DATA
-echo "(20) TEST"
+echo "(21) TEST"
 if [ "$DATA" != "OK_FILE_MD5" ]
 	then
 	echo "ERROR: FILE_ MD5"

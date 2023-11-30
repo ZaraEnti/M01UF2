@@ -8,12 +8,9 @@ TIMEOUT=1
 echo "EFTP 1.0"
 #1 escuchar
 echo "(0) Listen"
-#guardamos la variable
-#IP=`nc -l -p $PORT -w $TIMEOUT`
-#echo $IP
-
 DATA=`nc -l -p $PORT -w $TIMEOUT`
-
+PREFIX=`echo $DATA | cut -d " " -f 1`
+VERSION=`echo $DATA | cut -d " " -f 2`
 #echo $DATA
 #PROTOCOL=`echo $DATA | cut -d " " -f 1`
 #echo $PROTOCOL
@@ -21,7 +18,7 @@ DATA=`nc -l -p $PORT -w $TIMEOUT`
 #echo $IP
 echo "(3) Test & Send"
 
-if [ "$DATA" != "EFTP 1.0" ]
+if [ "$PREFIX $VERSION" != "EFTP 1.0" ]
 #== solo para strings. Si el de dentro queremos que sea sustido tiene que estar entre comillar ya que si no lo interpretara como un parámetro
 
 then
@@ -34,6 +31,12 @@ then
 
 fi
 
+CLIENT=`echo $DATA | cut -d " " -f 3`
+if [ "$CLIENT" == "" ]
+then
+	echo "EROOR: NO IP"
+	exit 1
+fi
 echo "OK_HEADER"
 sleep 1
 echo "OK_HEADER" | nc $CLIENT $PORT
