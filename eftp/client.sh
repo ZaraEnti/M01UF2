@@ -13,23 +13,20 @@ fi
 
 echo $0
 echo $1
-# para saber si me hja dado un parametro
-SERVER="10.65.0.72"
-IP="10.65.0.72"
+
+#VARIABLES
+SERVER="localhost"
+IP=`ip address | grep inet | grep enp0s3 | cut d " " -f 6 | cut d "/" -f 1`
 PORT="3333"
 TIMEOUT=1
-#echo $IP
 
-echo "(1) Send"
-#problemas de sincronizacion para que no tenga problemas de escucha
-#echo $IP
-#sleep 1
-#echo $IP | nc $SERVER $PORT
-
+#PROTOCOLO
 echo "EFTP 1.0"
-#justo encima de enviar al servidor
-sleep 1
-echo "EFTP 1.0 $IP" | nc $SERVER $PORT
+
+#PARTE1: SOY CLIENTE COMPROBAR CONEXIÓN
+echo "(1) Send"
+
+echo "EFTP 1.0" | nc $SERVER $PORT
 
 echo "(2) LISTEN"
 

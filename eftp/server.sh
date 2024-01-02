@@ -1,17 +1,26 @@
 #!/bin/bash
 #SOY SERVER
 
+#P1 como guardar el ip del cliente
+
+#VARIABLES
 CLIENT="10.65.0.72"
 PORT="3333"
 TIMEOUT=1
-#mensaje del servidor
+
+#PROTOCOLO
 echo "EFTP 1.0"
-#1 escuchar
+
+#PARTE1: ¿QUIÉN? CONEXIÓN DEL PUERTO 3333
 echo "(0) Listen"
+
 DATA=`nc -l -p $PORT -w $TIMEOUT`
+echo $DATA
+
 PREFIX=`echo $DATA | cut -d " " -f 1`
+
 VERSION=`echo $DATA | cut -d " " -f 2`
-#echo $DATA
+
 #PROTOCOL=`echo $DATA | cut -d " " -f 1`
 #echo $PROTOCOL
 #IP=`echo $DATA | cut -d " " -f 2`
