@@ -14,7 +14,7 @@ fi
 echo $0
 echo $1
 # para saber si me hja dado un parametro
-SERVER="10.65.0.72"
+SERVER="10.65.0.60"
 IP="10.65.0.72"
 PORT="3333"
 TIMEOUT=1
