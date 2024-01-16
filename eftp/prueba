@@ -1,0 +1,4 @@
+#!/bin/bash
+
+#SEND(1)
+echo "Holaaaa Buen añoo" | nc 192.168.0.51 3333
