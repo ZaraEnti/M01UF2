@@ -13,9 +13,9 @@ DROP TABLE IF EXISTS characters;
 
 CREATE TABLE comments (
 	id_coment INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	`comment` TEXT,
+	`comment` TEXT NOT NULL,
 	`datetime` DATETIME NOT NULL DEFAULT now() );
-	CREATE USER 'commentarios'@'localhost';
+CREATE USER 'commentarios'@'localhost';
 	GRANT SELECT, INSERT on faryadventures.comments to 'commentarios'@'localhost'; 
 
 CREATE TABLE characters (
