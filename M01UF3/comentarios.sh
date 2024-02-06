@@ -17,9 +17,6 @@ then
 	read COMMENT
 
 	DIRTYWORDS=`echo "$COMMENT" | grep chorizo`
-	DIRTYWORDS=`echo "$COMMENT" | grep carajo`
-	DIRTYWORDS=`echo "$COMMENT" | grep idiota`
-	DIRTYWORDS=`echo "$COMMENT" | grep cani`
 
 	if [ "$DIRTYWORDS" == "" ]
 	then
